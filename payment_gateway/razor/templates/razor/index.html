@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-6 mx-auto">
+<div class="text-center mt-5">
+<img src="https://www.onlygfx.com/wp-content/uploads/2015/12/coffee-cup.png" class="img-fluid img-responsive" style="height:200px">
+</div>
+<form method="post">
+{% csrf_token %}
+<div class="form-group">
+<label for="exampleInputEmail1">Enter name</label>
+<input type="name" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+</div>
+<div class="form-group">
+<label for="exampleInputPassword1">Enter Amount</label>
+<input name="amount" type="number" class="form-control" id="exampleInputPassword1">
+</div>
+<button type="submit" class="btn btn-success btn-block">Submit</button>
+</form>
+</div>
+{% if payment %}
+<div class="text-center mx-auto">
+<form action="/confirm" method="POST">
+<script
+src="https://checkout.razorpay.com/v1/checkout.js"
+data-key="rzp_test_JlPjzUIwgg90G9" // Enter the Key ID generated from the Dashboard
+data-amount="{{payment.amount}}" // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+data-currency="INR"
+data-order_id="{{payment.id}}"//This is a sample Order ID. Pass the `id` obtained in the response of the previous step.
+data-buttontext="Pay with Razorpay"
+data-name="Coffee Corp"
+data-description="Test transaction"
+data-image="https://example.com/your_logo.jpg"
+data-prefill.name="Gaurav Kumar"
+data-prefill.email="gaurav.kumar@example.com"
+data-prefill.contact="9999999999"
+data-theme.color="#F37254"
+></script>
+<input type="hidden" custom="Hidden Element" name="hidden">
+</form>
+{% endif %}
+</div>
+
+
+   
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        var app = new Vue({
+          delimiters: ['[[', ']]'],
+          el: '#app',
+          data: {
+              message: 'Hello Vue!',
+              name : null,
+              amount : null
+              
+          },
+          methods: {
+              greet: function(name) {
+                  console.log('Hello from ' + name + '!')
+              },
+              get : function(){
+                console.log(this.name , this.amount)
+              }
+          },
+          watch : {
+            amount(){
+                console.log(this.amount)
+            }
+          }
+        });
+      </script>
+
+
+<style>
+body{
+    background :#f5f6f8;
+}
+
+</style>
+{% endblock %}
