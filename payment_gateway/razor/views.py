@@ -3,8 +3,8 @@ import razorpay
 from django.views.decorators.csrf import csrf_exempt
 import os
 import json
-key_id=os.environ.get('RAZORPAY_KEY_ID')
-secret_key=os.environ.get('RAZORPAY_SECRET_KEY')
+key_id=os.environ.get('RAZORPAY_KEY_ID') #assign your id
+secret_key=os.environ.get('RAZORPAY_SECRET_KEY') #assign your secret key
 client = razorpay.Client(auth =(key_id , secret_key))
 def home(request):
     return render(request, 'index.html')
@@ -12,8 +12,8 @@ def pay(request):
     context={}
     if request.method == "POST":
         name = request.POST.get('name')
-        phone=os.environ.get('MY_PHONE')
-        email=os.environ.get('MY_EMAIL')
+        phone=os.environ.get('MY_PHONE')#assign your phone no
+        email=os.environ.get('MY_EMAIL')#assign your email id
         amount = int(request.POST.get('amount')) * 100
         
         payment = client.order.create({'amount':amount, 'currency':'INR',
