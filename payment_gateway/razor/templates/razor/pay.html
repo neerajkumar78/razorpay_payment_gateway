@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center mx-auto">
+    <form action="/status" method="POST">
+      {% csrf_token %}
+    <script
+    src="https://checkout.razorpay.com/v1/checkout.js"
+    data-key="{{context.key}}" // Enter the Key ID generated from the Dashboard
+    data-amount="{{context.amount}}" // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    data-currency="INR"
+    data-order_id="{{context.order_id}}"//This is a sample Order ID. Pass the `id` obtained in the response of the previous step.
+    data-buttontext="Pay with Razorpay"
+    data-name="TalentServe"
+    data-description="Test transaction"
+    data-image="data:image/png;base64,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"
+    data-prefill.name="{{context.name}}"
+    data-prefill.email="{{context.email}}"
+    data-prefill.contact="{{context.phone}}"
+    data-theme.color="#F37254"
+    ></script>
+    <input type="hidden" custom="Hidden Element" name="hidden">
+    </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        var app = new Vue({
+          delimiters: ['[[', ']]'],
+          el: '#app',
+          data: {
+              message: 'Hello Vue!',
+              name : null,
+              amount : null
+              
+          },
+          methods: {
+              greet: function(name) {
+                  console.log('Hello from ' + name + '!')
+              },
+              get : function(){
+                console.log(this.name , this.amount)
+              }
+          },
+          watch : {
+            amount(){
+                console.log(this.amount)
+            }
+          }
+        });
+      </script>
+
+
+<style>
+body{
+    background :#f5f6f8;
+}
+
+</style>
+{% endblock %}
